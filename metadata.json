@@ -1,0 +1,8 @@
+{
+  "name": "North Enerji",
+  "description": "Premium solar energy solutions provider platform with lead generation and admin management.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
