@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Sparkles, ChevronDown } from 'lucide-react';
 
 // --- MAGNETIC BUTTON COMPONENT ---
 const MagneticButton = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => {
@@ -43,7 +43,7 @@ const MagneticButton = ({ children, className = "" }: { children?: React.ReactNo
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20 pb-0 bg-[#0b0f14]">
+    <section className="relative h-[100dvh] min-h-[800px] flex flex-col justify-center items-center overflow-hidden bg-[#0b0f14] py-0">
       
       {/* 1. BACKGROUND: THE COSMIC NEBULA */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -89,38 +89,108 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 flex flex-col items-center">
+      <div className="container mx-auto px-6 relative z-10 flex flex-col items-center justify-center h-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="text-center max-w-5xl mx-auto"
+          className="text-center max-w-7xl mx-auto flex flex-col items-center justify-center w-full"
         >
-          {/* Badge */}
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md mb-6 md:mb-8 hover:border-primary/50 transition-colors shadow-[0_0_20px_rgba(33,201,151,0.1)]"
-          >
-            <div className="relative">
-                <span className="absolute inset-0 rounded-full bg-primary blur-sm animate-pulse opacity-50"></span>
-                <div className="w-2 h-2 bg-primary rounded-full relative z-10" />
-            </div>
-            <span className="text-[10px] md:text-xs font-mono text-primary tracking-[0.2em] font-bold">NORTH OS // ONLINE</span>
-          </motion.div>
-          
-          <h1 className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter mb-6 md:mb-8 leading-[0.9] drop-shadow-2xl">
-            <span className="block text-white">GELECEĞİ</span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-200 to-teal-500 animate-gradient-x">TASARLA.</span>
-          </h1>
+          {/* MAIN HERO CONTENT RESTRUCTURED */}
+          <div className="flex flex-col items-center justify-center gap-6 md:gap-8 mb-10 w-full pt-16 md:pt-24">
+              
+              {/* 1. Logo Image */}
+        
+        <div className="flex justify-center w-full">
+  <div className="relative inline-flex items-center justify-center">
+    {/* Glow halo */}
+    <div
+      className="absolute -inset-6 -z-10 rounded-full blur-2xl opacity-80"
+      style={{
+        background:
+          "radial-gradient(circle, rgba(255,204,0,0.45) 0%, rgba(255,204,0,0.18) 35%, transparent 70%)",
+      }}
+    />
 
-          <p className="max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 mb-10 md:mb-12 leading-relaxed font-light px-4 md:px-0">
-            Kusursuz mühendislik, sınırsız özgürlük. Yaşam alanınızı, North teknolojisiyle kendi kendine yeten <span className="text-white font-medium border-b border-primary/30 pb-0.5">otonom bir enerji ekosistemine</span> dönüştürün.
+    <img
+      src="/images/logo.png"
+      alt="North Enerji"
+      className="relative h-14 sm:h-20 md:h-24 lg:h-28 w-auto object-contain mx-auto"
+      style={{
+        filter:
+          "drop-shadow(0 0 14px rgba(255,204,0,0.55)) drop-shadow(0 0 40px rgba(255,204,0,0.25))",
+      }}
+    />
+  </div>
+</div>
+
+
+              {/* 2. Text: İSTEDİĞİNİZ (Titanium Style) */}
+              <motion.h2 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-4xl sm:text-6xl md:text-7xl font-display font-bold tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-100 to-gray-500 drop-shadow-[0_5px_15px_rgba(255,255,255,0.1)] text-center w-full pb-2"
+              >
+                İSTEDİĞİNİZ
+              </motion.h2>
+
+              {/* 3. Animated Badges: YERDE | SÜREYLE | GÜÇTE */}
+              <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 w-full px-4">
+                  {['YERDE', 'SÜREYLE', 'GÜÇTE'].map((word, i) => (
+                      <motion.div 
+                        key={i}
+                        initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                        animate={{ 
+                            opacity: 1, 
+                            scale: 1,
+                            y: [0, -5, 0] // Gentle float
+                        }}
+                        transition={{ 
+                            opacity: { duration: 0.5, delay: 0.5 + (i * 0.15) },
+                            scale: { duration: 0.5, delay: 0.5 + (i * 0.15), type: "spring" },
+                            y: { duration: 3 + i, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }
+                        }}
+                        className="group relative"
+                      >
+                          {/* Main Container */}
+                          <div className="relative px-6 py-3 md:px-10 md:py-4 rounded-2xl bg-[#121820]/60 backdrop-blur-xl border border-white/10 text-white font-display font-bold text-sm md:text-xl tracking-[0.15em] shadow-xl overflow-hidden transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-[0_0_30px_rgba(33,201,151,0.2)] flex items-center justify-center min-w-[120px] md:min-w-[160px]">
+                              {/* Shimmer Effect */}
+                              <motion.div 
+                                  className="absolute top-0 left-0 w-[50%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg]"
+                                  animate={{ x: ['-200%', '300%'] }}
+                                  transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: i * 1.5 }}
+                              />
+                              {/* Content */}
+                              <div className="relative z-10 flex items-center gap-2">
+                                  <span className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-blue-400' : i === 1 ? 'bg-purple-400' : 'bg-primary'} animate-pulse shadow-[0_0_10px_currentColor]`} />
+                                  {word}
+                              </div>
+                          </div>
+                      </motion.div>
+                  ))}
+              </div>
+
+              {/* 4. Text: ELEKTRİK (High Voltage Effect) */}
+              <div className="relative w-full flex justify-center perspective-[500px]">
+                  {/* Main Text with Flowing Energy Gradient */}
+                  <motion.h2 
+                    animate={{ backgroundPosition: ["0% center", "200% center"] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    className="relative z-20 text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] font-display font-black tracking-tighter leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-primary bg-[size:200%_auto] drop-shadow-[0_0_35px_rgba(33,201,151,0.6)] py-2 text-center w-full"
+                  >
+                    ELEKTRİK
+                  </motion.h2>
+              </div>
+          </div>
+
+          {/* Description (Preserved) */}
+          <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 mb-10 md:mb-12 leading-relaxed font-light px-4 md:px-0 text-center relative z-30">
+            North Enerji Teknolojisiyle Yaşam Alanınızı Kendi Kendine Yeten <span className="text-white font-medium border-b border-primary/30 pb-0.5">otonom bir enerji ekosistemine</span> dönüştürün.
           </p>
 
-          {/* Magnetic Buttons - DARK & GLOWING */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mb-16 w-full px-4 md:px-0">
+          {/* Magnetic Buttons (Preserved) */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mb-12 w-full px-4 md:px-0 relative z-30">
             <MagneticButton className="w-full sm:w-auto">
                <Link
                 to="/basvuru"
@@ -143,22 +213,16 @@ const Hero = () => {
             </MagneticButton>
           </div>
 
-          {/* Scroll Indicator */}
+          {/* Scroll Indicator - Bottom Anchored */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 1 }}
-            className="flex flex-col items-center gap-2 cursor-pointer"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-30 opacity-60 hover:opacity-100 transition-opacity"
             onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
           >
              <span className="text-[10px] text-gray-500 uppercase tracking-widest">Keşfet</span>
-             <div className="w-[1px] h-12 md:h-16 bg-gradient-to-b from-transparent via-primary/50 to-transparent relative overflow-hidden">
-                <motion.div 
-                   animate={{ y: [-100, 100] }}
-                   transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                   className="absolute inset-0 bg-gradient-to-b from-transparent via-primary to-transparent"
-                />
-             </div>
+             <ChevronDown size={20} className="text-primary animate-bounce" />
           </motion.div>
         </motion.div>
       </div>

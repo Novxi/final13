@@ -91,7 +91,7 @@ const ChatWidget = () => {
                      <h3 className="text-white font-display font-bold text-sm tracking-wide">North Intelligence</h3>
                      <div className="text-[10px] text-gray-400 font-medium flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                        Aktif
+                        Demo
                      </div>
                   </div>
                </div>

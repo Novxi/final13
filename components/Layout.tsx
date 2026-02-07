@@ -3,39 +3,47 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Sparkles, Lock } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 
+// ✅ PNG import (dosyayı: src/assets/north-sun.png yap)
+import northSunPng from '/images/logotek.png';
+
 // --- VIP WELCOME TOAST ---
 const WelcomeToast = () => {
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
 
-    useEffect(() => {
-        const timer = setTimeout(() => setShow(true), 1500);
-        const hideTimer = setTimeout(() => setShow(false), 8000);
-        return () => { clearTimeout(timer); clearTimeout(hideTimer); };
-    }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => setShow(true), 1500);
+    const hideTimer = setTimeout(() => setShow(false), 8000);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
 
-    return (
-        <AnimatePresence>
-            {show && (
-                <motion.div 
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: 100, opacity: 0 }}
-                    className="fixed top-24 right-6 z-[100000] hidden md:flex items-center gap-4 bg-[#0b0f14]/80 backdrop-blur-xl border border-primary/20 p-4 rounded-2xl shadow-[0_0_30px_rgba(33,201,151,0.15)] pointer-events-auto"
-                >
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center relative">
-                        <Sparkles className="w-5 h-5 text-primary" />
-                        <div className="absolute inset-0 rounded-full animate-ping bg-primary/20" />
-                    </div>
-                    <div>
-                        <div className="text-xs font-bold text-primary uppercase tracking-wider mb-0.5">Hoş Geldiniz</div>
-                        <div className="text-sm text-white">North Enerji ekosistemini keşfedin.</div>
-                    </div>
-                    <button onClick={() => setShow(false)} className="ml-2 text-gray-500 hover:text-white"><X size={14} /></button>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    )
-}
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 100, opacity: 0 }}
+          className="fixed top-24 right-6 z-[100000] hidden md:flex items-center gap-4 bg-[#0b0f14]/80 backdrop-blur-xl border border-primary/20 p-4 rounded-2xl shadow-[0_0_30px_rgba(33,201,151,0.15)] pointer-events-auto"
+        >
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center relative">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <div className="absolute inset-0 rounded-full animate-ping bg-primary/20" />
+          </div>
+          <div>
+            <div className="text-xs font-bold text-primary uppercase tracking-wider mb-0.5">Hoş Geldiniz</div>
+            <div className="text-sm text-white">North Enerji ekosistemini keşfedin.</div>
+          </div>
+          <button onClick={() => setShow(false)} className="ml-2 text-gray-500 hover:text-white">
+            <X size={14} />
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,15 +53,15 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
 
   const isAdmin = location.pathname.startsWith('/admin');
 
   useEffect(() => {
     const handleScroll = () => {
-        const scrolled = window.scrollY > 20;
-        if (scrolled !== isScrolled) setIsScrolled(scrolled);
+      const scrolled = window.scrollY > 20;
+      if (scrolled !== isScrolled) setIsScrolled(scrolled);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -71,12 +79,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => { document.body.style.overflow = 'unset'; }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [mobileMenuOpen]);
 
   // --- ADMIN MODE: Bypasses standard layout completely ---
   if (isAdmin) {
-      return <>{children}</>;
+    return <>{children}</>;
   }
 
   const navLinks = [
@@ -96,7 +106,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         style={{ scaleX }}
       />
 
-      {/* 
+      {/*
           HEADER FIX - ULTIMATE:
           - Parent: pointer-events-none (Transparent clicks pass through)
           - Children (Logo, Nav, Buttons): pointer-events-auto (They capture clicks)
@@ -110,9 +120,16 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <div className="container mx-auto px-6 flex items-center justify-between pointer-events-none">
           {/* Logo - Auto Pointer */}
           <Link to="/" className="flex items-center gap-2 group relative z-50 cursor-pointer pointer-events-auto">
-            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors border border-transparent group-hover:border-primary/20">
-              <Sun className="text-primary w-6 h-6 group-hover:rotate-45 transition-transform duration-500" />
+            {/* ✅ YEŞİL KARE KALKTI + PNG BÜYÜDÜ */}
+            <div className="w-12 h-12 flex items-center justify-center">
+              <img
+                src={northSunPng}
+                alt="North Enerji"
+                className="w-12 h-12 object-contain group-hover:rotate-45 transition-transform duration-500"
+                draggable={false}
+              />
             </div>
+
             <div className="flex flex-col">
               <span className="font-display font-bold text-xl tracking-tight leading-none text-white">NORTH</span>
               <span className="text-xs text-primary font-medium tracking-widest uppercase">ENERJİ</span>
@@ -135,8 +152,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
           {/* CTA & Mobile Toggle - Auto Pointer */}
           <div className="flex items-center gap-4 relative z-50 pointer-events-auto">
-            {/* Exclusive Client Portal Button */}
-            
             <Link
               to="/basvuru"
               className="hidden md:inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all duration-300 bg-primary/20 border border-primary/50 rounded-full hover:bg-primary hover:text-black hover:shadow-[0_0_20px_rgba(33,201,151,0.4)] hover:scale-105 cursor-pointer"
@@ -180,8 +195,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               >
                 Teklif Al
               </Link>
-              <Link 
-                to="/admin" 
+              <Link
+                to="/admin"
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm text-gray-500 mt-8 flex items-center justify-center gap-2 cursor-pointer"
               >
@@ -194,7 +209,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       {/* Main Content */}
       <main className="flex-grow pt-24 md:pt-0 relative z-0">
-        <AnimatePresence mode='wait'>
+        <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
             initial={{ opacity: 0, y: 20 }}
@@ -217,8 +232,19 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div>
               <div className="flex items-center gap-2 mb-6">
-                <Sun className="text-primary w-6 h-6" />
-                <span className="font-display font-bold text-xl text-white">NORTH ENERJİ</span>
+                
+<div className="flex items-center gap-3 mb-6">
+  <img
+    src={northSunPng}
+    alt="North Enerji"
+    className="w-11 h-11 object-contain shrink-0"
+    draggable={false}
+  />
+  
+</div>
+                <span className="font-display font-bold text-xl text-white leading-none">
+                  NORTH ENERJİ
+                  </span>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Geleceğin enerjisini bugünden tasarlıyoruz. Konut ve ticari solar çözümlerinde mühendislik odaklı yaklaşım.
@@ -227,17 +253,41 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div>
               <h4 className="font-display font-semibold text-white mb-4">Hizmetler</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><Link to="/hizmetler" className="hover:text-primary transition-colors cursor-pointer">Solar Sistemler</Link></li>
-                <li><Link to="/hizmetler" className="hover:text-primary transition-colors cursor-pointer">Enerji Depolama</Link></li>
-                <li><Link to="/hizmetler" className="hover:text-primary transition-colors cursor-pointer">Araç Şarj İstasyonları</Link></li>
+                <li>
+                  <Link to="/hizmetler" className="hover:text-primary transition-colors cursor-pointer">
+                    Solar Sistemler
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/hizmetler" className="hover:text-primary transition-colors cursor-pointer">
+                    Enerji Depolama
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/hizmetler" className="hover:text-primary transition-colors cursor-pointer">
+                    Araç Şarj İstasyonları
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-display font-semibold text-white mb-4">Kurumsal</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><Link to="/galeri" className="hover:text-primary transition-colors cursor-pointer">Projeler</Link></li>
-                <li><Link to="/video" className="hover:text-primary transition-colors cursor-pointer">Medya</Link></li>
-                <li><Link to="/iletisim" className="hover:text-primary transition-colors cursor-pointer">İletişim</Link></li>
+                <li>
+                  <Link to="/galeri" className="hover:text-primary transition-colors cursor-pointer">
+                    Projeler
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/video" className="hover:text-primary transition-colors cursor-pointer">
+                    Medya
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/iletisim" className="hover:text-primary transition-colors cursor-pointer">
+                    İletişim
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
@@ -254,9 +304,15 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
             <p>&copy; 2024 North Enerji Sistemleri A.Ş. Tüm hakları saklıdır.</p>
             <div className="flex gap-4 mt-4 md:mt-0">
-              <a href="#" className="hover:text-white transition-colors cursor-pointer">KVKK</a>
-              <a href="#" className="hover:text-white transition-colors cursor-pointer">Çerez Politikası</a>
-              <a href="#" className="hover:text-white transition-colors cursor-pointer">Gizlilik</a>
+              <a href="#" className="hover:text-white transition-colors cursor-pointer">
+                KVKK
+              </a>
+              <a href="#" className="hover:text-white transition-colors cursor-pointer">
+                Çerez Politikası
+              </a>
+              <a href="#" className="hover:text-white transition-colors cursor-pointer">
+                Gizlilik
+              </a>
             </div>
           </div>
         </div>
